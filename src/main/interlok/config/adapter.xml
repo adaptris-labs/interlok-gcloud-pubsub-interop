@@ -1,0 +1,123 @@
+<adapter>
+  <unique-id>interlok-gcp-test</unique-id>
+  <start-up-event-imp>com.adaptris.core.event.StandardAdapterStartUpEvent</start-up-event-imp>
+  <heartbeat-event-imp>com.adaptris.core.HeartbeatEvent</heartbeat-event-imp>
+  <shared-components>
+    <connections>
+      <google-cloud-pubsub-connection>
+        <unique-id>gcp-pubsub</unique-id>
+        <credentials-provider class="no-credentials-provider"/>
+        <channel-provider class="custom-channel-provider">
+          <address>${gcp.address}</address>
+          <use-plaintext>true</use-plaintext>
+        </channel-provider>
+        <flow-control-provider class="default-flow-control-provider"/>
+        <project-name>${gcp.project}</project-name>
+      </google-cloud-pubsub-connection>
+    </connections>
+    <services/>
+  </shared-components>
+  <event-handler class="default-event-handler">
+    <unique-id>DefaultEventHandler</unique-id>
+    <connection class="null-connection">
+      <unique-id>mad-goodall</unique-id>
+    </connection>
+    <producer class="null-message-producer">
+      <unique-id>berserk-lichterman</unique-id>
+    </producer>
+  </event-handler>
+  <message-error-handler class="null-processing-exception-handler">
+    <unique-id>ecstatic-euler</unique-id>
+  </message-error-handler>
+  <failed-message-retrier class="no-retries">
+    <unique-id>sharp-archimedes</unique-id>
+  </failed-message-retrier>
+  <channel-list>
+    <channel>
+      <consume-connection class="jetty-embedded-connection">
+        <unique-id>jetty-embedded-connection</unique-id>
+      </consume-connection>
+      <produce-connection class="shared-connection">
+        <lookup-name>gcp-pubsub</lookup-name>
+      </produce-connection>
+      <workflow-list>
+        <standard-workflow>
+          <consumer class="jetty-message-consumer">
+            <unique-id>api-gcp</unique-id>
+            <destination class="configured-consume-destination">
+              <destination>/api/gcp</destination>
+            </destination>
+            <parameter-handler class="jetty-http-ignore-parameters"/>
+            <header-handler class="jetty-http-ignore-headers"/>
+          </consumer>
+          <service-collection class="service-list">
+            <unique-id>hungry-curran</unique-id>
+            <services/>
+          </service-collection>
+          <producer class="google-cloud-pubsub-producer">
+            <unique-id>pubsub-produce</unique-id>
+            <destination class="configured-destination">
+              <destination>${gcp.topic}</destination>
+            </destination>
+            <create-topic>false</create-topic>
+            <publisher-cache-limit>10</publisher-cache-limit>
+            <metadata-filter class="no-op-metadata-filter"/>
+          </producer>
+          <produce-exception-handler class="null-produce-exception-handler"/>
+          <unique-id>workflow</unique-id>
+        </standard-workflow>
+      </workflow-list>
+      <unique-id>jetty-gcp</unique-id>
+    </channel>
+    <channel>
+      <consume-connection class="shared-connection">
+        <lookup-name>gcp-pubsub</lookup-name>
+      </consume-connection>
+      <produce-connection class="null-connection">
+        <unique-id>null</unique-id>
+      </produce-connection>
+      <workflow-list>
+        <standard-workflow>
+          <consumer class="google-cloud-pubsub-pull-consumer">
+            <unique-id>consumer</unique-id>
+            <destination class="configured-consume-destination">
+              <destination>${gcp.topic}</destination>
+            </destination>
+            <subscription-name>${gcp.subscription}</subscription-name>
+            <ack-deadline>
+              <unit>SECONDS</unit>
+              <interval>10</interval>
+            </ack-deadline>
+            <create-subscription>true</create-subscription>
+            <auto-acknowledge>true</auto-acknowledge>
+          </consumer>
+          <service-collection class="service-list">
+            <unique-id>focused-northcutt</unique-id>
+            <services>
+              <logging-service>
+                <unique-id>debug-loggin</unique-id>
+                <log-level>DEBUG</log-level>
+                <text>Message received.</text>
+              </logging-service>
+              <log-message-service>
+                <unique-id>log-message</unique-id>
+                <log-level>DEBUG</log-level>
+              </log-message-service>
+            </services>
+          </service-collection>
+          <producer class="null-message-producer">
+            <unique-id>no-produce</unique-id>
+          </producer>
+          <produce-exception-handler class="null-produce-exception-handler"/>
+          <unique-id>workflow</unique-id>
+        </standard-workflow>
+      </workflow-list>
+      <unique-id>gcp-pubsub-null</unique-id>
+      <auto-start>true</auto-start>
+    </channel>
+  </channel-list>
+  <message-error-digester class="standard-message-error-digester">
+    <unique-id>ErrorDigest</unique-id>
+    <digest-max-size>100</digest-max-size>
+  </message-error-digester>
+</adapter>

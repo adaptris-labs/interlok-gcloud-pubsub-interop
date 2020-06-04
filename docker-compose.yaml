@@ -1,0 +1,6 @@
+version: '3.7'
+services:
+  pubsub:
+    image: mcwarman/pubsub-emulator:latest
+    ports:
+      - "8042:8042"
