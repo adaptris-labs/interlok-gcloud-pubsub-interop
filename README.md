@@ -1,4 +1,4 @@
-# interlok-gcp-pubsub-tester
+# interlok-gcloud-pubsub-interop
 
 Test interlok configuration that has two workflows:
 
