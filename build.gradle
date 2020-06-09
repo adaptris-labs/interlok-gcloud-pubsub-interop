@@ -5,10 +5,13 @@ plugins {
 ext {
   interlokParentGradle = project.findProperty('interlokParentGradle') ?: 'https://raw.githubusercontent.com/adaptris-labs/interlok-build-parent/master/build.gradle'
   interlokVersion  = '3.10-SNAPSHOT'
+  interlokMavenLocal = project.findProperty('interlokMavenLocal') ?: false;
 }
 
 repositories {
-  mavenLocal()
+  if (interlokMavenLocal) {
+    mavenLocal()
+  }
 }
 
 allprojects {
