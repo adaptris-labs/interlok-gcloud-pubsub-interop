@@ -3,12 +3,12 @@ ext {
   interlokVersion  = '3.10-SNAPSHOT'
 }
 
-allprojects {
-  apply from: "${interlokParentGradle}"
-}
-
 repositories {
   mavenLocal()
+}
+
+allprojects {
+  apply from: "${interlokParentGradle}"
 }
 
 dependencies {
