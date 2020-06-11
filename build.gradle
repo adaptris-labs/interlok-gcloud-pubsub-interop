@@ -9,7 +9,7 @@ ext {
   dockerImageName = project.findProperty('dockerImageName') ?: "adaptrislabs/interlok-gcloud-pubsub"
   dockerImageTag = project.findProperty('dockerImageVersion') ?: "latest"
   interlokMavenLocal = project.findProperty('interlokMavenLocal') ?: false
-  addIntegrationTests = project.findProperty('enableIntegrationTests') ?: false
+  enableIntegrationTest = project.findProperty('enableIntegrationTest') ?: false
   interlokVerifyEnvironmentProperties = [
     PUBSUB_HOST: "localhost",
     PUBSUB_PORT: "8042"
@@ -26,7 +26,7 @@ repositories {
 
 allprojects {
   apply from: "${interlokParentGradle}"
-  if (enableIntegrationTests) {
+  if (enableIntegrationTest) {
     apply from: "$rootDir/integration-test.gradle"
   }
 }

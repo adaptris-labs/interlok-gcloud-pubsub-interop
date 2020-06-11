@@ -30,5 +30,5 @@ curl -X POST http://localhost:8080/api/gcp -d '{ "key" : "value" }'
 ## Integration Testing
 
 ```shell
-./gradlew integrationTest -PenableIntegrationTests=true
+./gradlew integrationTest -PenableIntegrationTest=true
 ```
