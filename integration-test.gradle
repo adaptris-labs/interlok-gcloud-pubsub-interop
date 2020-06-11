@@ -1,0 +1,29 @@
+apply plugin: 'java'
+
+sourceSets {
+  integrationTest {
+    compileClasspath += sourceSets.main.output + configurations.testCompile
+    runtimeClasspath += output + compileClasspath + configurations.testRuntime
+  }
+}
+
+dependencies {
+  interlokRuntime  group: "com.adaptris", name: "interlok-workflow-rest-services", version: interlokVersion, changing: true
+
+  integrationTestCompile('org.junit.jupiter:junit-jupiter-engine:5.6.2')
+  integrationTestCompile('org.apache.httpcomponents:httpclient:4.5.12')
+  integrationTestCompile('com.palantir.docker.compose:docker-compose-junit-jupiter:1.5.0')
+}
+
+
+task integrationTest(type: Test) {
+  description = 'Runs the integration tests.'
+  group = 'verification'
+  testClassesDirs = sourceSets.integrationTest.output.classesDirs
+  classpath = sourceSets.integrationTest.runtimeClasspath
+  outputs.upToDateWhen { false }
+  mustRunAfter test
+  useJUnitPlatform()
+}
+
+integrationTest.dependsOn project.tasks["docker"]

@@ -1,12 +1,22 @@
 plugins {
+  id "com.palantir.docker" version "0.25.0"
   id 'com.palantir.docker-compose' version "0.25.0"
 }
 
 ext {
   interlokParentGradle = project.findProperty('interlokParentGradle') ?: 'https://raw.githubusercontent.com/adaptris-labs/interlok-build-parent/master/build.gradle'
   interlokVersion  = '3.10-SNAPSHOT'
-  interlokMavenLocal = project.findProperty('interlokMavenLocal') ?: false;
+  dockerImageName = project.findProperty('dockerImageName') ?: "adaptrislabs/interlok-gcloud-pubsub"
+  dockerImageTag = project.findProperty('dockerImageVersion') ?: "latest"
+  interlokMavenLocal = project.findProperty('interlokMavenLocal') ?: false
+  addIntegrationTests = project.findProperty('enableIntegrationTests') ?: false
+  interlokVerifyEnvironmentProperties = [
+    PUBSUB_HOST: "localhost",
+    PUBSUB_PORT: "8042"
+  ]
 }
+
+dockerfileZip.enabled = false
 
 repositories {
   if (interlokMavenLocal) {
@@ -16,6 +26,9 @@ repositories {
 
 allprojects {
   apply from: "${interlokParentGradle}"
+  if (enableIntegrationTests) {
+    apply from: "$rootDir/integration-test.gradle"
+  }
 }
 
 dependencies {
@@ -23,6 +36,17 @@ dependencies {
   interlokJavadocs group: "com.adaptris", name: "interlok-gcloud-pubsub", version: interlokVersion, changing: true, classifier: "javadoc", transitive: false
 }
 
+docker {
+  name dockerImageName
+  tags dockerImageTag
+  copySpec.into("./build/distribution").from(installDist)
+  pull true
+  noCache true
+}
+
+
 dockerCompose {
   dockerComposeFile "docker-compose.yaml"
 }
+
+docker.dependsOn check, assemble

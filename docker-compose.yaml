@@ -1,6 +1,29 @@
 version: '3.7'
 services:
   pubsub:
+    container_name: pubsub
     image: mcwarman/pubsub-emulator:latest
+    hostname: pubsub
     ports:
       - "8042:8042"
+  pubsub-init:
+    container_name: pubsub-init
+    image: curlimages/curl:latest
+    command: "-s -X PUT --retry 5 --retry-connrefused http://pubsub:8042/v1/projects/interlok-test/topics/my-topic"
+    depends_on:
+      - pubsub
+    links:
+      - pubsub:pubsub
+  interlok:
+    image: adaptrislabs/interlok-gcloud-pubsub
+    container_name: interlok
+    hostname: interlok
+    environment:
+      - PUBSUB_HOST=pubsub
+      - PUBSUB_PORT=8042
+    ports:
+      - '8080:8080'
+    depends_on:
+      - pubsub-init
+    links:
+      - pubsub:pubsub
