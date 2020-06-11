@@ -22,6 +22,7 @@ jobs:
         sudo apt-get -y -q install haveged
         sudo systemctl enable haveged
         sudo systemctl restart haveged
+        sudo cat /etc/docker/daemon.json
         jq '. + { "storage-driver": "overlay" }' /etc/docker/daemon.json > daemon_updated.json
         mv daemon_updated.json /etc/docker/daemon.json
         systemctl restart docker
