@@ -22,8 +22,9 @@ jobs:
         sudo apt-get -y -q install haveged
         sudo systemctl enable haveged
         sudo systemctl restart haveged
-        docker info
-        sudo modprobe -r overlay && modprobe overlay redirect_dir=off && systemctl restart docker
+        sudo modprobe -r overlay
+        sudo modprobe overlay redirect_dir=off
+        sudo systemctl restart docker
         docker info
     - name: Gradle Wrapper Cache
       uses: actions/cache@v1
