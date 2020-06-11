@@ -41,7 +41,7 @@ docker {
   tags dockerImageTag
   copySpec.into("./build/distribution").from(installDist)
   pull true
-  noCache false
+  noCache true
 }
 
 
