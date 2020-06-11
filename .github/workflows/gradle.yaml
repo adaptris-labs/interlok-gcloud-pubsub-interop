@@ -22,10 +22,9 @@ jobs:
         sudo apt-get -y -q install haveged
         sudo systemctl enable haveged
         sudo systemctl restart haveged
-        sudo cat /etc/docker/daemon.json
-        jq '. + { "storage-driver": "overlay" }' /etc/docker/daemon.json > daemon_updated.json
-        mv daemon_updated.json /etc/docker/daemon.json
-        systemctl restart docker
+        sudo jq '. + { "storage-driver": "overlay" }' /etc/docker/daemon.json > daemon_updated.json
+        sudo mv daemon_updated.json /etc/docker/daemon.json
+        sudo systemctl restart docker
     - name: Gradle Wrapper Cache
       uses: actions/cache@v1
       with:
