@@ -22,6 +22,7 @@ jobs:
         sudo apt-get -y -q install haveged
         sudo systemctl enable haveged
         sudo systemctl restart haveged
+        docker --version
     - name: Gradle Wrapper Cache
       uses: actions/cache@v1
       with:
