@@ -19,6 +19,14 @@ cd ./build/distribution
 java -jar ./lib/interlok-boot.jar
 ```
 
+## Extra
+
+If you want to create a new topic you do it via curl:
+
+```shell
+curl -X PUT http://localhost:8042/v1/projects/interlok-test/topics/my-new-topic
+```
+
 ## Testing
 
 ```shell
