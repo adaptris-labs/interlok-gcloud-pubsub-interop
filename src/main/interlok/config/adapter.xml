@@ -44,9 +44,7 @@
         <standard-workflow>
           <consumer class="jetty-message-consumer">
             <unique-id>api-gcp</unique-id>
-            <destination class="configured-consume-destination">
-              <destination>/api/gcp</destination>
-            </destination>
+            <path>/api/gcp</path>
             <parameter-handler class="jetty-http-ignore-parameters"/>
             <header-handler class="jetty-http-ignore-headers"/>
           </consumer>
@@ -56,9 +54,7 @@
           </service-collection>
           <producer class="google-cloud-pubsub-producer">
             <unique-id>pubsub-produce</unique-id>
-            <destination class="configured-destination">
-              <destination>${gcp.topic}</destination>
-            </destination>
+            <topic>${gcp.topic}</topic>
             <create-topic>false</create-topic>
             <publisher-cache-limit>10</publisher-cache-limit>
             <metadata-filter class="no-op-metadata-filter"/>
@@ -80,9 +76,7 @@
         <standard-workflow>
           <consumer class="google-cloud-pubsub-pull-consumer">
             <unique-id>consumer</unique-id>
-            <destination class="configured-consume-destination">
-              <destination>${gcp.topic}</destination>
-            </destination>
+            <topic>${gcp.topic}</topic>
             <subscription-name>${gcp.subscription}</subscription-name>
             <ack-deadline>
               <unit>SECONDS</unit>

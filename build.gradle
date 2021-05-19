@@ -3,8 +3,7 @@ plugins {
 }
 
 ext {
-  interlokParentGradle = project.findProperty('interlokParentGradle') ?: 'https://raw.githubusercontent.com/adaptris-labs/interlok-build-parent/master/build.gradle'
-  interlokVersion  = '3.10-SNAPSHOT'
+  interlokParentGradle = project.findProperty('interlokParentGradle') ?: 'https://raw.githubusercontent.com/adaptris/interlok-build-parent/main/v4/build.gradle'
   interlokMavenLocal = project.findProperty('interlokMavenLocal') ?: false;
 }
 
@@ -19,8 +18,8 @@ allprojects {
 }
 
 dependencies {
-  interlokRuntime  group: "com.adaptris", name: "interlok-gcloud-pubsub", version: interlokVersion, changing: true
-  interlokJavadocs group: "com.adaptris", name: "interlok-gcloud-pubsub", version: interlokVersion, changing: true, classifier: "javadoc", transitive: false
+  interlokRuntime  ("com.adaptris:interlok-gcloud-pubsub:$interlokVersion") { changing= true }
+  interlokJavadocs group: "com.adaptris", name: "interlok-gcloud-pubsub", version: "$interlokVersion", changing: true, classifier: "javadoc", transitive: false
 }
 
 dockerCompose {

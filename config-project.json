@@ -7,8 +7,8 @@
     "/adapter/shared-components/connections/google-cloud-pubsub-connection[unique-id=\"gcp-pubsub\"]/project-name" : "${gcp.project}",
     "/adapter/shared-components/connections/google-cloud-pubsub-connection[unique-id=\"gcp-pubsub\"]/channel-provider/address" : "${gcp.address}",
     "/adapter/channel-list/channel[unique-id=\"gcp-pubsub-null\"]/workflow-list/standard-workflow[unique-id=\"workflow\"]/consumer/subscription-name" : "${gcp.subscription}",
-    "/adapter/channel-list/channel[unique-id=\"gcp-pubsub-null\"]/workflow-list/standard-workflow[unique-id=\"workflow\"]/consumer/destination/destination" : "${gcp.topic}",
-    "/adapter/channel-list/channel[unique-id=\"jetty-gcp\"]/workflow-list/standard-workflow[unique-id=\"workflow\"]/producer/destination/destination" : "${gcp.topic}"
+    "/adapter/channel-list/channel[unique-id=\"gcp-pubsub-null\"]/workflow-list/standard-workflow[unique-id=\"workflow\"]/consumer/topic" : "${gcp.topic}",
+    "/adapter/channel-list/channel[unique-id=\"jetty-gcp\"]/workflow-list/standard-workflow[unique-id=\"workflow\"]/producer/topic" : "${gcp.topic}"
   },
   "uidInXincludeCompntListFileName" : false,
   "xincludeXpaths" : { },
