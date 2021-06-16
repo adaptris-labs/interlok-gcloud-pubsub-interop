@@ -1,4 +1,4 @@
-# interlok-gcloud-pubsub-interop [![Actions Status](https://github.com/adaptris-labs/interlok-gcloud-pubsub-interop/workflows/verifyInterlokConfig/badge.svg)](https://github.com/adaptris-labs/interlok-gcloud-pubsub-interop/actions)
+# interlok-gcloud-pubsub-interop [![gradle](https://github.com/adaptris-labs/interlok-gcloud-pubsub-interop/actions/workflows/gradle.yaml/badge.svg)](https://github.com/adaptris-labs/interlok-gcloud-pubsub-interop/actions/workflows/gradle.yaml)
 
 Test interlok configuration that has two workflows:
 
