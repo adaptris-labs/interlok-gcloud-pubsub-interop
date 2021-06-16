@@ -1,4 +1,4 @@
-name: verifyInterlokConfig
+name: gradle
 
 on:
   push:
